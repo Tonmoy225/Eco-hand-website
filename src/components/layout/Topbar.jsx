@@ -4,10 +4,12 @@ import { useAuthStore } from "../../store/authStore";
 import { useUIStore } from "../../store/uiStore";
 import { getNotificationsApi } from "../../api/users";
 import { getCartApi } from "../../api/users";
+import { useChatStore } from "../../store/chatStore";
 
 export default function Topbar() {
   const { user } = useAuthStore();
   const { openModal, searchQuery, setSearchQuery, toggleMobileNav } = useUIStore();
+  const { unread: chatUnread, openChat } = useChatStore();
   const [unread, setUnread] = useState(0);
   const [cartCount, setCartCount] = useState(0);
 
@@ -56,6 +58,11 @@ export default function Topbar() {
       <div className="topbar-actions">
         <button className="post-btn" onClick={() => openModal("createPost")}>
           <i className="fa-solid fa-plus"></i> Post
+        </button>
+
+        <button className="tb-btn" onClick={openChat} title="Messages" aria-label="Messages">
+          <i className="fa-regular fa-comments"></i>
+          {chatUnread > 0 && <span className="badge">{chatUnread > 9 ? "9+" : chatUnread}</span>}
         </button>
 
         <button className="tb-btn" onClick={() => openModal("cart")} title="Cart">

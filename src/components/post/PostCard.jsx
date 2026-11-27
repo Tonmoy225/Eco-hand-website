@@ -13,10 +13,12 @@ import {
 } from "../../api/posts";
 import { useAuthStore } from "../../store/authStore";
 import { useUIStore } from "../../store/uiStore";
+import { useChatStore } from "../../store/chatStore";
 
 export default function PostCard({ post, onUpdate, onDelete }) {
   const { user } = useAuthStore();
   const { openModal } = useUIStore();
+  const { startChat } = useChatStore();
 
   const [liked, setLiked] = useState(post.likes?.includes(user?._id));
   const [likeCount, setLikeCount] = useState(post.likes?.length || 0);
@@ -78,6 +80,14 @@ export default function PostCard({ post, onUpdate, onDelete }) {
       setCommentText("");
     } catch {
       toast.error("Please login to comment");
+    }
+  };
+
+  const handleChat = async () => {
+    try {
+      await startChat(post.owner?._id, post._id);
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Could not start a chat");
     }
   };
 
@@ -205,6 +215,11 @@ export default function PostCard({ post, onUpdate, onDelete }) {
         <div className={`post-action ${saved ? "saved" : ""}`} onClick={handleSave}>
           <i className={saved ? "fa-solid fa-bookmark" : "fa-regular fa-bookmark"}></i> Save
         </div>
+        {!isOwner && user && (
+          <div className="post-action chat-action" onClick={handleChat}>
+            <i className="fa-regular fa-comments"></i> Chat
+          </div>
+        )}
       </div>
 
       {showComments && (

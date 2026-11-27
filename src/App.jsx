@@ -7,6 +7,7 @@ import CategoryBar from "./components/layout/CategoryBar";
 import Sidebar from "./components/layout/Sidebar";
 import RightPanel from "./components/layout/RightPanel";
 import MobileNav from "./components/layout/MobileNav";
+import ChatWidget from "./components/chat/ChatWidget";
 import ModalRoot from "./components/modals/ModalRoot";
 import Feed from "./pages/Feed";
 import PostDetail from "./pages/PostDetail";
@@ -69,6 +70,7 @@ export default function App() {
         <RightPanel />
       </div>
       <MobileNav />
+      <ChatWidget />
       <div id="mobile-drawer" className={mobileNavOpen ? "open" : ""}>
         <div className="drawer-backdrop" onClick={closeMobileNav}></div>
         <div className="drawer-panel">
