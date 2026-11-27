@@ -7,7 +7,7 @@ import { getCartApi } from "../../api/users";
 
 export default function Topbar() {
   const { user } = useAuthStore();
-  const { openModal, searchQuery, setSearchQuery } = useUIStore();
+  const { openModal, searchQuery, setSearchQuery, toggleMobileNav } = useUIStore();
   const [unread, setUnread] = useState(0);
   const [cartCount, setCartCount] = useState(0);
 
@@ -31,6 +31,9 @@ export default function Topbar() {
 
   return (
     <div id="topbar">
+      <button className="menu-btn" onClick={toggleMobileNav} aria-label="Open menu" title="Menu">
+        <i className="fa-solid fa-bars"></i>
+      </button>
       <Link to="/" className="logo">
         <div className="logo-icon">
           <i className="fa-solid fa-leaf"></i>

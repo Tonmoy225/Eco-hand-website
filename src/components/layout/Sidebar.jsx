@@ -2,36 +2,52 @@ import { Link, useLocation } from "react-router-dom";
 import { useAuthStore } from "../../store/authStore";
 import { useUIStore } from "../../store/uiStore";
 
-export default function Sidebar() {
+export default function Sidebar({ drawer = false, onNavigate = () => {} }) {
   const { user } = useAuthStore();
   const { openModal } = useUIStore();
   const location = useLocation();
 
   const isActive = (path) => location.pathname === path;
+  const open = (name) => {
+    onNavigate();
+    openModal(name);
+  };
 
   return (
-    <div id="sidebar">
-      <Link to="/" className={`nav-item ${isActive("/") ? "active" : ""}`}>
+    <div id={drawer ? undefined : "sidebar"} className={drawer ? "sidebar-drawer-inner" : ""}>
+      <Link
+        to="/"
+        className={`nav-item ${isActive("/") ? "active" : ""}`}
+        onClick={onNavigate}
+      >
         <i className="fa-solid fa-house"></i>
         <span>News Feed</span>
       </Link>
-      <Link to="/my-posts" className={`nav-item ${isActive("/my-posts") ? "active" : ""}`}>
+      <Link
+        to="/my-posts"
+        className={`nav-item ${isActive("/my-posts") ? "active" : ""}`}
+        onClick={onNavigate}
+      >
         <i className="fa-solid fa-rectangle-list"></i>
         <span>My Posts</span>
       </Link>
-      <Link to="/saved" className={`nav-item ${isActive("/saved") ? "active" : ""}`}>
+      <Link
+        to="/saved"
+        className={`nav-item ${isActive("/saved") ? "active" : ""}`}
+        onClick={onNavigate}
+      >
         <i className="fa-regular fa-bookmark"></i>
         <span>Saved Posts</span>
       </Link>
-      <div className="nav-item" onClick={() => openModal("cart")}>
+      <div className="nav-item" onClick={() => open("cart")}>
         <i className="fa-solid fa-cart-shopping"></i>
         <span>My Cart</span>
       </div>
-      <div className="nav-item" onClick={() => openModal("notifications")}>
+      <div className="nav-item" onClick={() => open("notifications")}>
         <i className="fa-regular fa-bell"></i>
         <span>Notifications</span>
       </div>
-      <Link to={`/profile/${user?._id}`} className="nav-item">
+      <Link to={`/profile/${user?._id}`} className="nav-item" onClick={onNavigate}>
         <i className="fa-regular fa-user"></i>
         <span>My Profile</span>
       </Link>
@@ -48,19 +64,19 @@ export default function Sidebar() {
 
       <div className="nav-divider"></div>
       <div className="nav-section-title">Support</div>
-      <div className="nav-item" onClick={() => openModal("terms")}>
+      <div className="nav-item" onClick={() => open("terms")}>
         <i className="fa-solid fa-file-contract"></i>
         <span>Terms of Policy</span>
       </div>
-      <div className="nav-item" onClick={() => openModal("feedback")}>
+      <div className="nav-item" onClick={() => open("feedback")}>
         <i className="fa-regular fa-comment-dots"></i>
         <span>Feedback</span>
       </div>
-      <div className="nav-item" onClick={() => openModal("report")}>
+      <div className="nav-item" onClick={() => open("report")}>
         <i className="fa-solid fa-flag"></i>
         <span>Report a Problem</span>
       </div>
-      <div className="nav-item" onClick={() => openModal("logout")} style={{ color: "var(--red)" }}>
+      <div className="nav-item" onClick={() => open("logout")} style={{ color: "var(--red)" }}>
         <i className="fa-solid fa-right-from-bracket"></i>
         <span>Logout</span>
       </div>

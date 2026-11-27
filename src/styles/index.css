@@ -96,6 +96,35 @@ input,textarea,select{font-family:'Inter',sans-serif;outline:none;border:none}
 .tb-avatar:hover{border-color:var(--accent)}
 .post-btn{padding:7px 16px;border-radius:var(--radius-sm);background:var(--accent);color:#fff;font-size:0.8rem;font-weight:600;display:flex;align-items:center;gap:6px;transition:var(--transition)}
 .post-btn:hover{background:var(--accent-hover);transform:translateY(-1px)}
+.menu-btn{
+  display:none;width:36px;height:36px;flex:none;
+  border-radius:var(--radius-sm);background:var(--bg-card);
+  border:1px solid var(--border);color:var(--text-secondary);
+  align-items:center;justify-content:center;font-size:0.95rem;transition:var(--transition);
+}
+.menu-btn:hover{color:var(--accent);border-color:var(--accent)}
+
+/* Slide-out navigation for tablet / mobile */
+#mobile-drawer{position:fixed;inset:0;z-index:1800;visibility:hidden;pointer-events:none}
+#mobile-drawer.open{visibility:visible;pointer-events:auto}
+.drawer-backdrop{position:absolute;inset:0;background:rgba(5,3,15,0.65);opacity:0;transition:opacity 0.25s ease}
+#mobile-drawer.open .drawer-backdrop{opacity:1}
+.drawer-panel{
+  position:absolute;top:0;left:0;bottom:0;width:280px;max-width:85vw;
+  background:var(--bg-sidebar);border-right:1px solid var(--border);
+  overflow-y:auto;padding:14px 12px;
+  transform:translateX(-100%);transition:transform 0.25s ease;
+}
+#mobile-drawer.open .drawer-panel{transform:translateX(0)}
+.drawer-head{
+  display:flex;align-items:center;justify-content:space-between;
+  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.05rem;
+  padding:4px 8px 14px;margin-bottom:6px;border-bottom:1px solid var(--divider);
+}
+.drawer-head button{
+  width:32px;height:32px;border-radius:50%;background:var(--bg-input);
+  color:var(--text-secondary);display:flex;align-items:center;justify-content:center;
+}
 
 /*===========================================
   CATEGORY PILLS BAR
@@ -213,6 +242,17 @@ input,textarea,select{font-family:'Inter',sans-serif;outline:none;border:none}
 .form-label{font-size:0.8rem;font-weight:600;color:var(--text-secondary);margin-bottom:6px;display:block}
 .form-input{width:100%;background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 13px;font-size:0.875rem;color:var(--text-primary);transition:var(--transition)}
 .form-input:focus{border-color:var(--accent)}
+.password-wrap{position:relative}
+.password-wrap .form-input{padding-right:44px}
+.password-toggle{
+  position:absolute;right:6px;top:50%;transform:translateY(-50%);
+  width:32px;height:32px;border-radius:var(--radius-sm);
+  background:transparent;color:var(--text-muted);
+  display:flex;align-items:center;justify-content:center;font-size:0.95rem;
+  transition:var(--transition);
+}
+.password-toggle:hover{color:var(--accent);background:var(--purple-600)}
+.password-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 .form-textarea{resize:vertical;min-height:90px}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 
@@ -295,17 +335,118 @@ input,textarea,select{font-family:'Inter',sans-serif;outline:none;border:none}
 /*===========================================
   RESPONSIVE
 ===========================================*/
-@media(max-width:1100px){
-  #layout{grid-template-columns:80px 1fr}
-  #right-panel{display:none}
-  .nav-item span{display:none}
-  .nav-item{justify-content:center}
-  .nav-section-title{display:none}
+#mobile-nav{display:none}
+
+/*--------------------------------------------
+   PC / LARGE DESKTOP  (1441px and wider)
+   Base rules above already cover this tier.
+   --------------------------------------------*/
+
+/*--------------------------------------------
+   LAPTOP  (1025px - 1440px)
+   Right panel narrows, then drops away.
+   --------------------------------------------*/
+@media(max-width:1440px){
+  #main-content{max-width:720px}
 }
-@media(max-width:760px){
+@media(max-width:1280px){
+  #right-panel{display:none}
+  #layout{grid-template-columns:var(--sidebar-w) 1fr}
+}
+@media(max-width:1100px){
+  #layout{grid-template-columns:76px 1fr}
+  #sidebar{padding:16px 8px}
+  .nav-item span,.nav-section-title,.eco-stat-card{display:none}
+  .nav-item{justify-content:center;padding:12px}
+}
+
+/*--------------------------------------------
+   TABLET  (768px - 1024px)
+   Sidebar becomes a hamburger drawer;
+   content uses the full width.
+   --------------------------------------------*/
+@media(max-width:1024px){
   #layout{grid-template-columns:1fr}
   #sidebar{display:none}
-  #main-content{grid-column:1;padding:12px}
+  #main-content{grid-column:1;padding:18px 16px;max-width:760px}
+  .menu-btn{display:flex}
+  .topbar-search{max-width:360px}
+  .form-row{grid-template-columns:1fr}
+  .condition-grid{grid-template-columns:repeat(2,1fr)}
+  .post-images.many{grid-template-columns:1fr 1fr}
+}
+
+/*--------------------------------------------
+   MOBILE  (up to 767px)
+   --------------------------------------------*/
+@media(max-width:767px){
+  #layout{
+    grid-template-columns:1fr;
+    padding-bottom:calc(66px + env(safe-area-inset-bottom,0px));
+  }
+  #sidebar{display:none}
+  #main-content{grid-column:1;padding:12px 10px;max-width:100%}
+  #cat-bar{padding:0 10px;gap:6px}
+  #topbar{padding:0 10px;gap:8px}
+  .logo{min-width:auto;font-size:1.05rem}
+  .logo-icon{width:28px;height:28px}
   .topbar-search{display:none}
-  .logo{min-width:auto}
+  .topbar-actions{gap:5px}
+  .post-btn{width:38px;height:38px;padding:0;justify-content:center;font-size:0}
+  .post-btn i{font-size:0.95rem}
+  .tb-btn,.tb-avatar{width:34px;height:34px}
+
+  .post-head{padding:12px}
+  .post-body{padding:0 12px 10px}
+  .post-stats-row{padding:8px 12px;font-size:0.72rem}
+  .post-action{padding:9px 4px;font-size:0.75rem;gap:5px}
+  .post-images{max-height:300px}
+  .post-images.one img{max-height:300px}
+
+  .modal-overlay{padding:12px;align-items:flex-end}
+  .modal{
+    max-width:100%;max-height:92vh;
+    border-radius:var(--radius-lg) var(--radius-lg) 0 0;
+    padding:20px 18px;
+  }
+  .modal-wide{max-width:100%}
+  .landing-hero{padding:32px 18px}
+
+  #mobile-nav{
+    position:fixed;left:0;right:0;bottom:0;z-index:1500;
+    height:calc(60px + env(safe-area-inset-bottom,0px));
+    padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px));
+    background:var(--bg-topbar);border-top:1px solid var(--border);
+    display:flex;align-items:center;justify-content:space-around;
+  }
+  .mobile-nav-item{
+    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+    color:var(--text-muted);font-size:0.68rem;font-weight:600;
+    background:transparent;transition:var(--transition);
+  }
+  .mobile-nav-item i{font-size:1.1rem}
+  .mobile-nav-item.active{color:var(--accent)}
+  .mobile-nav-item:hover{color:var(--text-primary)}
+  .mobile-post-btn{
+    width:44px;height:44px;flex:none;border-radius:50%;
+    background:var(--accent);color:#fff;font-size:1.05rem;
+    margin-top:-22px;box-shadow:0 4px 14px rgba(139,92,246,0.45);
+  }
+  .mobile-post-btn:hover{background:var(--accent-hover);color:#fff}
+}
+
+/*--------------------------------------------
+   SMALL MOBILE  (up to 420px)
+   --------------------------------------------*/
+@media(max-width:420px){
+  .post-action{font-size:0;gap:0}
+  .post-action i{font-size:1.05rem}
+  .post-stats-row>div:last-child{font-size:0.68rem}
+  .modal{padding:18px 14px}
+  .landing-hero h1{font-size:1.9rem}
+  .landing-hero p{font-size:0.9rem}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
 }

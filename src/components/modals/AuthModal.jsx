@@ -5,6 +5,7 @@ import { useAuthStore } from "../../store/authStore";
 export default function AuthModal() {
   const { authModalView, setAuthView, closeAuthModal, login, register } = useAuthStore();
   const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const isLogin = authModalView === "login";
@@ -48,10 +49,22 @@ export default function AuthModal() {
         </div>
 
         <div className="auth-tabs">
-          <div className={`auth-tab ${isLogin ? "active" : ""}`} onClick={() => setAuthView("login")}>
+          <div
+            className={`auth-tab ${isLogin ? "active" : ""}`}
+            onClick={() => {
+              setAuthView("login");
+              setShowPassword(false);
+            }}
+          >
             Login
           </div>
-          <div className={`auth-tab ${!isLogin ? "active" : ""}`} onClick={() => setAuthView("signup")}>
+          <div
+            className={`auth-tab ${!isLogin ? "active" : ""}`}
+            onClick={() => {
+              setAuthView("signup");
+              setShowPassword(false);
+            }}
+          >
             Sign Up
           </div>
         </div>
@@ -83,16 +96,27 @@ export default function AuthModal() {
           </div>
           <div className="form-group">
             <label className="form-label">Password</label>
-            <input
-              className="form-input"
-              type="password"
-              name="password"
-              placeholder="••••••••"
-              value={form.password}
-              onChange={handleChange}
-              required
-              minLength={6}
-            />
+            <div className="password-wrap">
+              <input
+                className="form-input"
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="••••••••"
+                value={form.password}
+                onChange={handleChange}
+                required
+                minLength={6}
+              />
+              <button
+                type="button"
+                className="password-toggle"
+                onClick={() => setShowPassword((v) => !v)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                title={showPassword ? "Hide password" : "Show password"}
+              >
+                <i className={showPassword ? "fa-solid fa-eye-slash" : "fa-solid fa-eye"}></i>
+              </button>
+            </div>
           </div>
           <button className="btn btn-accent" type="submit" disabled={loading}>
             {loading ? (

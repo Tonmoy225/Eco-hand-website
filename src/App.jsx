@@ -1,10 +1,12 @@
 import { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuthStore } from "./store/authStore";
+import { useUIStore } from "./store/uiStore";
 import Topbar from "./components/layout/Topbar";
 import CategoryBar from "./components/layout/CategoryBar";
 import Sidebar from "./components/layout/Sidebar";
 import RightPanel from "./components/layout/RightPanel";
+import MobileNav from "./components/layout/MobileNav";
 import ModalRoot from "./components/modals/ModalRoot";
 import Feed from "./pages/Feed";
 import PostDetail from "./pages/PostDetail";
@@ -15,6 +17,7 @@ import Landing from "./pages/Landing";
 
 export default function App() {
   const { user, loading, init } = useAuthStore();
+  const { mobileNavOpen, closeMobileNav } = useUIStore();
 
   useEffect(() => {
     init();
@@ -62,6 +65,19 @@ export default function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
         <RightPanel />
+      </div>
+      <MobileNav />
+      <div id="mobile-drawer" className={mobileNavOpen ? "open" : ""}>
+        <div className="drawer-backdrop" onClick={closeMobileNav}></div>
+        <div className="drawer-panel">
+          <div className="drawer-head">
+            <span>Menu</span>
+            <button onClick={closeMobileNav} aria-label="Close menu">
+              <i className="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <Sidebar drawer onNavigate={closeMobileNav} />
+        </div>
       </div>
       <ModalRoot />
     </>

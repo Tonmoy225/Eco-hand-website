@@ -7,6 +7,11 @@ export const useUIStore = create((set) => ({
   openModal: (name, props = {}) => set({ activeModal: name, modalProps: props }),
   closeModal: () => set({ activeModal: null, modalProps: {} }),
 
+  // Sidebar drawer for tablet/mobile screens
+  mobileNavOpen: false,
+  toggleMobileNav: () => set((s) => ({ mobileNavOpen: !s.mobileNavOpen })),
+  closeMobileNav: () => set({ mobileNavOpen: false }),
+
   activeCategory: "All",
   setActiveCategory: (cat) => set({ activeCategory: cat }),
 
