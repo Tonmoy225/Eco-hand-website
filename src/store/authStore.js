@@ -17,8 +17,13 @@ export const useAuthStore = create((set, get) => ({
     try {
       const { data } = await getMeApi();
       set({ user: data, loading: false });
-    } catch {
-      localStorage.removeItem("ecohand_token");
+    } catch (err) {
+      // Only discard the token when the server explicitly rejected it.
+      // A network error (e.g. a sleeping free-tier backend) must not log the
+      // user out permanently — the token can still be reused on next load.
+      if (err.response && [401, 403].includes(err.response.status)) {
+        localStorage.removeItem("ecohand_token");
+      }
       set({ user: null, loading: false });
     }
   },
@@ -49,3 +54,10 @@ export const useAuthStore = create((set, get) => ({
 
   updateUserLocal: (patch) => set({ user: { ...get().user, ...patch } }),
 }));
+
+// Keep UI in sync when any API call reports an expired/invalid token.
+if (typeof window !== "undefined") {
+  window.addEventListener("ecohand:unauthorized", () => {
+    useAuthStore.setState({ user: null });
+  });
+}

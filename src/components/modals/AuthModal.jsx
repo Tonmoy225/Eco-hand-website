@@ -28,7 +28,10 @@ export default function AuthModal() {
         toast.success("Account created! Welcome to EcoHand 🌱");
       }
     } catch (err) {
-      toast.error(err.response?.data?.message || "Something went wrong");
+      toast.error(
+        err.response?.data?.message ||
+          "Cannot reach the server right now. Please try again in a moment."
+      );
     } finally {
       setLoading(false);
     }
