@@ -14,6 +14,7 @@ import Profile from "./pages/Profile";
 import MyPosts from "./pages/MyPosts";
 import SavedPosts from "./pages/SavedPosts";
 import Landing from "./pages/Landing";
+import Admin from "./pages/Admin";
 
 export default function App() {
   const { user, loading, init } = useAuthStore();
@@ -62,6 +63,7 @@ export default function App() {
           <Route path="/profile/:id" element={<Profile />} />
           <Route path="/my-posts" element={<MyPosts />} />
           <Route path="/saved" element={<SavedPosts />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
         <RightPanel />

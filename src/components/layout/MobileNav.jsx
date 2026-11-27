@@ -36,6 +36,15 @@ export default function MobileNav() {
         <i className="fa-regular fa-user"></i>
         <span>Profile</span>
       </Link>
+      {user?.role === "admin" && (
+        <Link
+          to="/admin"
+          className={`mobile-nav-item ${isActive("/admin") ? "active" : ""}`}
+        >
+          <i className="fa-solid fa-shield-halved"></i>
+          <span>Admin</span>
+        </Link>
+      )}
     </nav>
   );
 }

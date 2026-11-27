@@ -333,6 +333,57 @@ input,textarea,select{font-family:'Inter',sans-serif;outline:none;border:none}
 .landing-hero p{color:var(--text-secondary);font-size:1rem;max-width:480px;margin:0 auto 28px}
 
 /*===========================================
+   ADMIN DASHBOARD
+===========================================*/
+.admin-page{max-width:980px}
+.admin-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.admin-header h1{font-family:'Space Grotesk',sans-serif;font-size:1.4rem;display:flex;align-items:center;gap:9px}
+.admin-header h1 i{color:var(--accent)}
+.admin-header p{font-size:0.85rem;color:var(--text-secondary);margin-top:4px}
+.admin-refresh{width:auto;padding:9px 14px;font-size:0.8rem;flex:none}
+.admin-tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--border);margin-bottom:16px;padding-bottom:2px}
+.admin-tabs::-webkit-scrollbar{display:none}
+.admin-tab{padding:9px 14px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;background:transparent;color:var(--text-secondary);font-size:0.83rem;font-weight:600;white-space:nowrap;transition:var(--transition)}
+.admin-tab:hover{color:var(--text-primary);background:var(--bg-card)}
+.admin-tab.active{color:var(--accent);background:var(--accent-glow);box-shadow:inset 0 -2px 0 var(--accent)}
+.admin-loading{padding:30px;text-align:center;color:var(--text-muted);font-size:0.85rem}
+.admin-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px}
+.admin-stat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;text-align:center}
+.admin-stat-card i{font-size:1.15rem}
+.admin-stat-num{font-size:1.5rem;font-weight:800;margin:6px 0 2px}
+.admin-stat-label{font-size:0.72rem;color:var(--text-muted)}
+.admin-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:14px}
+.admin-card h3{font-size:0.95rem;margin-bottom:12px}
+.admin-card-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.admin-card-title h3{margin:0}
+.admin-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--divider)}
+.admin-row:first-of-type{border-top:none}
+.admin-avatar,.admin-thumb{width:36px;height:36px;border-radius:8px;background:var(--bg-input);display:flex;align-items:center;justify-content:center;color:var(--text-muted);overflow:hidden;flex:none;font-weight:700;font-size:0.8rem}
+.admin-avatar img,.admin-thumb img{width:100%;height:100%;object-fit:cover}
+.admin-row-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.admin-row-main strong{font-size:0.85rem;color:var(--text-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.admin-row-main span{font-size:0.74rem;color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.admin-muted{font-size:0.74rem;color:var(--text-muted)}
+.role-badge,.status-badge,.demo-badge{font-size:0.68rem;font-weight:700;padding:3px 9px;border-radius:20px;text-transform:capitalize}
+.role-badge.admin{background:var(--accent-glow);color:var(--purple-200)}
+.role-badge.user,.status-badge{background:var(--bg-input);color:var(--text-secondary)}
+.status-badge.available{background:var(--green-bg);color:var(--green)}
+.status-badge.sold{background:rgba(239,68,68,0.15);color:var(--red)}
+.status-badge.reserved,.status-badge.pending{background:rgba(245,158,11,0.15);color:var(--gold)}
+.status-badge.reviewed,.status-badge.resolved{background:var(--accent-glow);color:var(--purple-200)}
+.demo-badge{margin-left:5px;background:rgba(245,158,11,0.15);color:var(--gold);font-size:0.6rem}
+.admin-mini-btn{padding:6px 10px;border-radius:var(--radius-sm);background:var(--bg-input);border:1px solid var(--border);color:var(--text-secondary);font-size:0.72rem;font-weight:600;white-space:nowrap;transition:var(--transition);flex:none}
+.admin-mini-btn:hover{border-color:var(--accent);color:var(--accent)}
+.admin-mini-btn.danger:hover{border-color:var(--red);color:var(--red)}
+.admin-report{padding:12px 0;border-top:1px solid var(--divider)}
+.admin-report:first-of-type{border-top:none}
+.admin-report-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px}
+.admin-report-head strong{font-size:0.85rem;display:flex;align-items:center;gap:6px}
+.admin-report-head strong i{color:var(--red)}
+.admin-report p{font-size:0.82rem;color:var(--text-secondary);line-height:1.5;margin-bottom:6px}
+.admin-report-actions{display:flex;gap:8px;margin-top:10px}
+
+/*===========================================
   RESPONSIVE
 ===========================================*/
 #mobile-nav{display:none}

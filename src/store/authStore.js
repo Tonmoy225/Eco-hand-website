@@ -28,18 +28,31 @@ export const useAuthStore = create((set, get) => ({
     }
   },
 
+  // Login/register responses from older backends omit `role`, so fetch the
+  // full profile to make admin navigation appear immediately after sign-in.
+  resolveUser: async (data) => {
+    try {
+      const { data: me } = await getMeApi();
+      return me;
+    } catch {
+      return data;
+    }
+  },
+
   login: async (email, password) => {
     const { data } = await loginApi({ email, password });
     localStorage.setItem("ecohand_token", data.token);
-    set({ user: data, isAuthModalOpen: false });
-    return data;
+    const full = await get().resolveUser(data);
+    set({ user: full, isAuthModalOpen: false });
+    return full;
   },
 
   register: async (name, email, password) => {
     const { data } = await registerApi({ name, email, password });
     localStorage.setItem("ecohand_token", data.token);
-    set({ user: data, isAuthModalOpen: false });
-    return data;
+    const full = await get().resolveUser(data);
+    set({ user: full, isAuthModalOpen: false });
+    return full;
   },
 
   logout: async () => {

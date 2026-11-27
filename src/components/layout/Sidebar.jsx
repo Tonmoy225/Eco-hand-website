@@ -51,6 +51,16 @@ export default function Sidebar({ drawer = false, onNavigate = () => {} }) {
         <i className="fa-regular fa-user"></i>
         <span>My Profile</span>
       </Link>
+      {user?.role === "admin" && (
+        <Link
+          to="/admin"
+          className={`nav-item ${isActive("/admin") ? "active" : ""}`}
+          onClick={onNavigate}
+        >
+          <i className="fa-solid fa-shield-halved"></i>
+          <span>Admin Dashboard</span>
+        </Link>
+      )}
 
       <div className="nav-divider"></div>
       <div className="nav-section-title">Eco Impact</div>
